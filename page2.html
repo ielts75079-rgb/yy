@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Our Memories</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="transition-overlay" id="overlay"></div>
+
+  <!-- Background Music -->
+  <audio id="bgMusic" autoplay loop>
+    <source src="music.mp3" type="audio/mpeg">
+  </audio>
+
+  <h2>Some of My Favorite Moments With You ✨</h2>
+
+  <div class="gallery-container">
+    <div class="floating-photo">
+      <img src="https://via.placeholder.com/180x160" alt="Memory 1">
+      <p>Best Day Ever</p>
+    </div>
+    <div class="floating-photo">
+      <img src="https://via.placeholder.com/180x160" alt="Memory 2">
+      <p>Crazy Times</p>
+    </div>
+    <div class="floating-photo">
+      <img src="https://via.placeholder.com/180x160" alt="Memory 3">
+      <p>Always Together</p>
+    </div>
+  </div>
+
+  <button class="nav-btn" onclick="navigateTo('page3.html')">Next Magic Step ✨</button>
+
+  <script>
+    function navigateTo(url) {
+      document.getElementById('overlay').classList.add('active');
+      setTimeout(() => { window.location.href = url; }, 800);
+    }
+  </script>
+</body>
+</html>

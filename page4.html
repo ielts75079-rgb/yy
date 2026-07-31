@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>A Letter For You</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Stamp Card -->
+  <div class="stamp-card">
+    <div class="stamp-badge">BESTIE</div>
+    <h2>Dear Bestie,</h2>
+    <p style="margin-top: 15px; line-height: 1.6;">
+      Thank you for being the most amazing friend in the world. Life is so much brighter and funnier with you in it! 💖
+    </p>
+  </div>
+
+  <!-- Funny Quiz Section -->
+  <div class="quiz-section">
+    <h3 id="quizTitle">Do you hate me? 👀</h3>
+    <div class="btn-group">
+      <button class="quiz-btn" id="yesBtn">Yes</button>
+      <button class="quiz-btn" id="noBtn">No</button>
+    </div>
+    <h2 id="finalMessage" style="margin-top:20px; color:#ff4757; display:none;"></h2>
+  </div>
+
+  <script>
+    const yesBtn = document.getElementById('yesBtn');
+    const noBtn = document.getElementById('noBtn');
+    const quizTitle = document.getElementById('quizTitle');
+    const finalMessage = document.getElementById('finalMessage');
+    
+    let moveCount = 0;
+
+    // Moving "Yes" button logic
+    yesBtn.addEventListener('mouseover', moveYesButton);
+    yesBtn.addEventListener('click', moveYesButton);
+
+    function moveYesButton() {
+      if (moveCount < 3) {
+        const x = Math.random() * (window.innerWidth - 100) - (window.innerWidth / 2 - 50);
+        const y = Math.random() * 100 - 50;
+        yesBtn.style.transform = `translate(${x}px, ${y}px)`;
+        moveCount++;
+      } else {
+        yesBtn.style.display = 'none'; // Vanish after moving 3 times
+      }
+    }
+
+    // Clicking "No" triggers final sweet prank message
+    noBtn.addEventListener('click', () => {
+      yesBtn.style.display = 'none';
+      noBtn.style.display = 'none';
+      quizTitle.style.display = 'none';
+      finalMessage.innerText = "pucchu pucchu i know u love me send me a bucket of pepsi now 🥤💖";
+      finalMessage.style.display = 'block';
+    });
+  </script>
+</body>
+</html>

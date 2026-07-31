@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Sweet Surprises</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="transition-overlay" id="overlay"></div>
+
+  <h2>Scratch the boxes to reveal messages! 🎁</h2>
+
+  <div class="scratch-grid">
+    <div class="scratch-card"><span>You make me laugh!</span><canvas></canvas></div>
+    <div class="scratch-card"><span>My partner in crime.</span><canvas></canvas></div>
+    <div class="scratch-card"><span>Best secret keeper!</span><canvas></canvas></div>
+    <div class="scratch-card"><span>Always there for me.</span><canvas></canvas></div>
+    <div class="scratch-card"><span>Truly irreplaceable.</span><canvas></canvas></div>
+    <div class="scratch-card"><span>Love you to bits!</span><canvas></canvas></div>
+  </div>
+
+  <button class="nav-btn" onclick="navigateTo('page4.html')">Final Surprise 💌</button>
+
+  <script>
+    // Scratch Card Canvas Script
+    document.querySelectorAll('.scratch-card').forEach(card => {
+      const canvas = card.querySelector('canvas');
+      const ctx = canvas.getContext('2d');
+      canvas.width = card.offsetWidth;
+      canvas.height = card.offsetHeight;
+
+      // Cover with gray layer
+      ctx.fillStyle = '#b2bec3';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      let isDrawing = false;
+      const scratch = (e) => {
+        if (!isDrawing) return;
+        const rect = canvas.getBoundingClientRect();
+        const x = (e.clientX || e.touches[0].clientX) - rect.left;
+        const y = (e.clientY || e.touches[0].clientY) - rect.top;
+
+        ctx.globalCompositeOperation = 'destination-out';
+        ctx.beginPath();
+        ctx.arc(x, y, 15, 0, Math.PI * 2);
+        ctx.fill();
+      };
+
+      canvas.addEventListener('mousedown', () => isDrawing = true);
+      canvas.addEventListener('mouseup', () => isDrawing = false);
+      canvas.addEventListener('mousemove', scratch);
+      canvas.addEventListener('touchstart', () => isDrawing = true);
+      canvas.addEventListener('touchend', () => isDrawing = false);
+      canvas.addEventListener('touchmove', scratch);
+    });
+
+    function navigateTo(url) {
+      document.getElementById('overlay').classList.add('active');
+      setTimeout(() => { window.location.href = url; }, 800);
+    }
+  </script>
+</body>
+</html>

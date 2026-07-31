@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Happy Friendship Day!</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="transition-overlay" id="overlay"></div>
+
+  <h1>Happy Friendship Day Bestie! 💐</h1>
+  
+  <div class="flower-container">
+    💐🌸🌻🌹🌷
+  </div>
+
+  <p>Preparing something special for you...</p>
+
+  <script>
+    // Automatically transition to Page 2 after 4 seconds
+    setTimeout(() => {
+      document.getElementById('overlay').classList.add('active');
+      setTimeout(() => {
+        window.location.href = 'page2.html';
+      }, 800);
+    }, 4000);
+  </script>
+</body>
+</html>
