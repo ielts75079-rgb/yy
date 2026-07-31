@@ -2,15 +2,162 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <!-- Crucial for mobile responsiveness -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Sweet Surprises</title>
   <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      text-align: center;
+      background-color: #fdfbf7;
+      color: #333;
+      margin: 0;
+      padding: 15px;
+      box-sizing: border-box;
+    }
+
+    h2 {
+      font-size: 1.3rem;
+      margin-bottom: 5px;
+      padding: 0 10px;
+    }
+
+    /* Slide/Swipe Hint Indicator */
+    .swipe-hint {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      font-size: 0.85rem;
+      color: #ff6b81;
+      margin-bottom: 15px;
+      font-weight: 600;
+      animation: pulseSlide 1.5s infinite ease-in-out;
+    }
+
+    @keyframes pulseSlide {
+      0%, 100% { transform: translateX(0); opacity: 0.7; }
+      50% { transform: translateX(6px); opacity: 1; }
+    }
+
+    /* Horizontal Scratch Grid for Mobile / Flex Wrap for Desktop */
+    .scratch-grid {
+      display: flex;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      gap: 15px;
+      padding: 10px 15px 20px 15px;
+      width: 100%;
+      max-width: 400px;
+      margin: 0 auto;
+      box-sizing: border-box;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .scratch-grid::-webkit-scrollbar {
+      height: 6px;
+    }
+
+    .scratch-grid::-webkit-scrollbar-thumb {
+      background: #ffcad4;
+      border-radius: 10px;
+    }
+
+    /* Individual Scratch Card */
+    .scratch-card {
+      position: relative;
+      background: #ffffff;
+      min-width: 260px;
+      height: 90px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      font-size: 0.95rem;
+      color: #ff6b81;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+      overflow: hidden;
+      border: 2px dashed #ffcad4;
+      scroll-snap-align: center;
+      flex-shrink: 0;
+    }
+
+    .scratch-card span {
+      padding: 0 15px;
+      z-index: 1;
+      text-align: center;
+    }
+
+    .scratch-card canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      cursor: pointer;
+      z-index: 2;
+    }
+
+    /* Responsive Button */
+    .nav-btn {
+      margin-top: 20px;
+      padding: 12px 24px;
+      font-size: 1rem;
+      background-color: #ff6b81;
+      color: white;
+      border: none;
+      border-radius: 25px;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(255, 107, 129, 0.3);
+    }
+
+    /* Transition Overlay */
+    .transition-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #000;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.8s ease;
+      z-index: 999;
+    }
+
+    .transition-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    /* Media Query for Larger Screens (Tablets & Desktops) */
+    @media (min-width: 768px) {
+      .scratch-grid {
+        overflow-x: visible;
+        flex-wrap: wrap;
+        justify-content: center;
+        max-width: 600px;
+      }
+      .scratch-card {
+        width: 270px;
+        min-width: unset;
+      }
+      .swipe-hint {
+        display: none; /* Hide swipe hint on desktop screens */
+      }
+    }
+  </style>
 </head>
 <body>
   <div class="transition-overlay" id="overlay"></div>
 
   <h2>Scratch the boxes to reveal messages! 🎁</h2>
+  
+  <!-- Slide Indicator -->
+  <div class="swipe-hint">
+    <span>👈 Swipe to see more boxes 👉</span>
+  </div>
 
   <div class="scratch-grid">
     <div class="scratch-card"><span>You make me laugh!</span><canvas></canvas></div>
@@ -29,7 +176,6 @@
       const canvas = card.querySelector('canvas');
       const ctx = canvas.getContext('2d');
       
-      // Ensure canvas matches element size dynamically
       canvas.width = card.offsetWidth;
       canvas.height = card.offsetHeight;
 
@@ -60,7 +206,7 @@
       
       canvas.addEventListener('touchstart', (e) => { isDrawing = true; scratch(e); });
       window.addEventListener('touchend', () => isDrawing = false);
-      canvas.addEventListener('touchmove', (e) => { e.preventDefault(); scratch(e); }, { passive: false });
+      canvas.addEventListener('touchmove', (e) => { scratch(e); }, { passive: true });
     });
 
     function navigateTo(url) {
