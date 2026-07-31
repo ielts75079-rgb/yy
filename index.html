@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Happy Friendship Day!</title>
   <link rel="stylesheet" href="style.css">
   <style>
@@ -25,16 +26,18 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
+      justify-content: flex-start;
       min-height: 85vh;
       padding: 20px;
       position: relative;
     }
 
     .title-heading {
-      font-size: 3rem;
+      font-size: 2.5rem;
       color: var(--text-accent);
-      margin-bottom: 20px;
+      margin-top: 20px;
+      margin-bottom: 250px; /* Generous spacing so the sun arc stays completely below and clear of the text */
+      text-align: center;
       letter-spacing: 0.5px;
       text-shadow: 0 2px 4px rgba(0,0,0,0.08);
       animation: fadeIn 1.5s ease-in;
@@ -44,8 +47,8 @@
     /* Sun trajectory: starts bottom-left corner -> rises to top-middle zenith -> sets at bottom-right corner */
     .sun {
       position: absolute;
-      width: 70px;
-      height: 70px;
+      width: 65px;
+      height: 65px;
       border-radius: 50%;
       z-index: 1;
       animation: sunArcJourney 9s forwards cubic-bezier(0.37, 0, 0.63, 1);
@@ -55,7 +58,7 @@
       0% {
         /* Bottom-left corner sunrise */
         left: 5%;
-        bottom: 20px;
+        top: 380px;
         background-color: #ff7675;
         box-shadow: 0 0 25px #fab1a0, 0 0 50px #ff7675;
         transform: scale(0.6);
@@ -64,7 +67,7 @@
       25% {
         /* Rising up */
         left: 28%;
-        bottom: 280px;
+        top: 220px;
         background-color: #ffeaa7;
         box-shadow: 0 0 40px #ffeaa7, 0 0 80px #fdcb6e;
         transform: scale(0.85);
@@ -73,7 +76,7 @@
       50% {
         /* Upper-middle zenith peak */
         left: 50%;
-        bottom: 420px;
+        top: 140px;
         transform: translateX(-50%) scale(1.1);
         background-color: #fff;
         box-shadow: 0 0 70px #ffeaa7, 0 0 140px #f1c40f, 0 0 200px rgba(255,255,255,0.9);
@@ -82,7 +85,7 @@
       75% {
         /* Descending toward afternoon */
         left: 72%;
-        bottom: 280px;
+        top: 220px;
         background-color: #fab1a0;
         box-shadow: 0 0 40px #fab1a0, 0 0 80px #e17055;
         transform: scale(0.85);
@@ -90,8 +93,8 @@
       }
       100% {
         /* Bottom-right corner sunset */
-        left: 90%;
-        bottom: 20px;
+        left: 88%;
+        top: 380px;
         background-color: #e17055;
         box-shadow: 0 0 25px #d63031;
         transform: scale(0.6);
@@ -114,9 +117,9 @@
       display: flex;
       justify-content: center;
       align-items: flex-end;
-      gap: 18px;
-      height: 280px;
-      margin: 30px 0;
+      gap: 12px;
+      height: 260px;
+      margin: 10px 0 20px 0;
       width: 100%;
       max-width: 900px;
       z-index: 5;
@@ -193,13 +196,25 @@
 
     /* Loading Text at bottom */
     .loading-text {
-      margin-top: 30px;
-      font-size: 1.1rem;
+      margin-top: 10px;
+      font-size: 1.05rem;
       color: var(--loading-text);
       letter-spacing: 1.5px;
       font-weight: 300;
+      text-align: center;
       animation: fadeIn 1.5s ease-in;
       z-index: 10;
+    }
+
+    /* Responsive adjustments for smaller mobile screens */
+    @media (max-width: 600px) {
+      .title-heading {
+        font-size: 2rem;
+        margin-bottom: 220px;
+      }
+      .flower-garden {
+        gap: 6px;
+      }
     }
   </style>
 </head>
@@ -216,7 +231,7 @@
     <div class="flower-garden">
       
       <!-- 1. Flower H -->
-      <svg class="flower-h" width="75" height="250" viewBox="0 0 100 280" style="transform: translateY(20px) scale(0.9);">
+      <svg class="flower-h" width="65" height="230" viewBox="0 0 100 280" style="transform: translateY(18px) scale(0.9);">
         <path class="stem" d="M 50,280 Q 30,160 50,85" stroke-width="5" fill="none" stroke-linecap="round" />
         <g class="flower-head" style="transform-origin: 50px 85px;">
           <circle cx="50" cy="55" r="16" fill="#f1c40f" />
@@ -229,7 +244,7 @@
       </svg>
 
       <!-- 2. Flower A -->
-      <svg class="flower-a1" width="75" height="250" viewBox="0 0 100 280" style="transform: translateY(12px) scale(0.95);">
+      <svg class="flower-a1" width="65" height="230" viewBox="0 0 100 280" style="transform: translateY(10px) scale(0.95);">
         <path class="stem" d="M 50,280 Q 70,160 50,85" stroke-width="5" fill="none" stroke-linecap="round" />
         <g class="flower-head" style="transform-origin: 50px 85px;">
           <circle cx="50" cy="55" r="16" fill="#e67e22" />
@@ -242,7 +257,7 @@
       </svg>
 
       <!-- 3. Flower B -->
-      <svg class="flower-b1" width="75" height="250" viewBox="0 0 100 280" style="transform: translateY(5px) scale(1.0);">
+      <svg class="flower-b1" width="65" height="230" viewBox="0 0 100 280" style="transform: translateY(4px) scale(1.0);">
         <path class="stem" d="M 50,280 Q 40,150 50,80" stroke-width="5" fill="none" stroke-linecap="round" />
         <g class="flower-head" style="transform-origin: 50px 80px;">
           <circle cx="50" cy="50" r="16" fill="#9b59b6" />
@@ -255,7 +270,7 @@
       </svg>
 
       <!-- 4. Flower I -->
-      <svg class="flower-i" width="75" height="250" viewBox="0 0 100 280" style="transform: translateY(0px) scale(1.05);">
+      <svg class="flower-i" width="65" height="230" viewBox="0 0 100 280" style="transform: translateY(0px) scale(1.05);">
         <path class="stem" d="M 50,280 Q 60,140 50,75" stroke-width="5" fill="none" stroke-linecap="round" />
         <g class="flower-head" style="transform-origin: 50px 75px;">
           <circle cx="50" cy="45" r="16" fill="#f1c40f" />
@@ -268,7 +283,7 @@
       </svg>
 
       <!-- 5. Flower B -->
-      <svg class="flower-b2" width="75" height="250" viewBox="0 0 100 280" style="transform: translateY(12px) scale(0.95);">
+      <svg class="flower-b2" width="65" height="230" viewBox="0 0 100 280" style="transform: translateY(10px) scale(0.95);">
         <path class="stem" d="M 50,280 Q 40,160 50,85" stroke-width="5" fill="none" stroke-linecap="round" />
         <g class="flower-head" style="transform-origin: 50px 85px;">
           <circle cx="50" cy="55" r="16" fill="#e67e22" />
@@ -281,7 +296,7 @@
       </svg>
 
       <!-- 6. Flower A -->
-      <svg class="flower-a2" width="75" height="250" viewBox="0 0 100 280" style="transform: translateY(20px) scale(0.9);">
+      <svg class="flower-a2" width="65" height="230" viewBox="0 0 100 280" style="transform: translateY(18px) scale(0.9);">
         <path class="stem" d="M 50,280 Q 60,160 50,85" stroke-width="5" fill="none" stroke-linecap="round" />
         <g class="flower-head" style="transform-origin: 50px 85px;">
           <circle cx="50" cy="55" r="16" fill="#f1c40f" />
