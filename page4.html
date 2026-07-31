@@ -66,7 +66,7 @@
       z-index: 3;
     }
 
-    /* The Secret Message Paper - Totally Hidden Initially */
+    /* The Secret Message Paper */
     .message-paper {
       position: absolute;
       bottom: 10px;
@@ -153,13 +153,13 @@
   </div>
 
   <!-- Funny Quiz Section -->
-  <div class="quiz-section" style="margin-top: 140px;">
+  <div class="quiz-section" style="margin-top: 140px; margin-bottom: 50px;">
     <h3 id="quizTitle">Do you hate me? 👀</h3>
     <div class="btn-group">
       <button class="quiz-btn" id="yesBtn">Yes</button>
       <button class="quiz-btn" id="noBtn">No</button>
     </div>
-    <h2 id="finalMessage" style="margin-top:20px; color:#ff4757; display:none; position: relative; z-index: 100000; font-size: 2rem;"></h2>
+    <h2 id="finalMessage" style="margin-top:30px; color:#ff4757; display:none; font-size: 1.8rem;"></h2>
   </div>
 
   <script>
@@ -198,9 +198,10 @@
     noBtn.addEventListener('click', () => {
       yesBtn.style.display = 'none';
       noBtn.style.display = 'none';
+      noBtn.classList.remove('fullscreen-no'); // Removes screen overlay so letter remains visible
       quizTitle.style.display = 'none';
-      envelope.style.display = 'none'; // Hide envelope to focus on final message
       
+      // Keeps the envelope visible and displays the final prank text right underneath it
       finalMessage.innerText = "pucchu pucchu i know u love me send me a bucket of pepsi now 🥤💖";
       finalMessage.style.display = 'block';
     });
