@@ -39,7 +39,7 @@
     yesBtn.addEventListener('click', moveYesButton);
 
     function moveYesButton() {
-      if (moveCount < 3) {
+      if (moveCount < 7) {
         const x = Math.random() * (window.innerWidth - 100) - (window.innerWidth / 2 - 50);
         const y = Math.random() * 100 - 50;
         yesBtn.style.transform = `translate(${x}px, ${y}px)`;
@@ -54,7 +54,7 @@
       yesBtn.style.display = 'none';
       noBtn.style.display = 'none';
       quizTitle.style.display = 'none';
-      finalMessage.innerText = "pucchu pucchu i know u love me send me a bucket of pepsi now 🥤💖";
+      finalMessage.innerText = "Pucchu Pucchu I know U Love Me Send me a bucket of pepsi and Barca away Kit🥤💖";
       finalMessage.style.display = 'block';
     });
   </script>
