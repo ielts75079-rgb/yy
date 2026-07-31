@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Grand Finale - Page 7</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .finale-container {
+      max-width: 500px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    .fireworks-text {
+      font-size: 1.5rem;
+      color: #ff4757;
+      margin: 20px 0;
+      animation: bounce 1s infinite alternate;
+    }
+    @keyframes bounce {
+      from { transform: translateY(0); }
+      to { transform: translateY(-10px); }
+    }
+    .restart-btn {
+      background-color: #a29bfe;
+      margin-top: 20px;
+    }
+    .restart-btn:hover {
+      background-color: #6c5ce7;
+    }
+  </style>
+</head>
+<body>
+  <div class="transition-overlay" id="overlay"></div>
+
+  <div class="finale-container">
+    <h2>Happy Friendship Day Once Again! 🥳</h2>
+    <div class="fireworks-text">🎆✨💖✨🎆</div>
+    <p>Thank you for clicking through all the magic steps. You are stuck with me for life, whether you like it or not!</p>
+    
+    <button class="nav-btn restart-btn" onclick="navigateTo('index.html')">Start Over From Beginning 🔄</button>
+  </div>
+
+  <script>
+    function navigateTo(url) {
+      document.getElementById('overlay').classList.add('active');
+      setTimeout(() => { window.location.href = url; }, 800);
+    }
+  </script>
+</body>
+</html>

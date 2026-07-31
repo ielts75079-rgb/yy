@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Friendship Voucher - Page 6</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .voucher-card {
+      background: #ffffff;
+      border: 3px dashed #ff4757;
+      border-radius: 15px;
+      padding: 25px;
+      max-width: 400px;
+      margin: 30px auto;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+      position: relative;
+    }
+    .voucher-card h3 {
+      color: #ff4757;
+      margin-bottom: 10px;
+    }
+    .voucher-card p {
+      font-size: 0.95rem;
+      color: #444;
+      line-height: 1.5;
+    }
+    .redeem-btn {
+      background-color: #2ed573;
+      margin-top: 15px;
+    }
+    .redeem-btn:hover {
+      background-color: #26af5f;
+    }
+  </style>
+</head>
+<body>
+  <div class="transition-overlay" id="overlay"></div>
+
+  <div class="page-content">
+    <h2>Claim Your Special Voucher 🎟️</h2>
+    
+    <div class="voucher-card" id="voucher">
+      <h3>✨ ULTIMATE BESTIE VOUCHER ✨</h3>
+      <p>This coupon entitles the bearer to <strong>unlimited free food treats</strong>, mandatory listening to gossip, and a lifelong partner to blame things on.</p>
+      <button class="nav-btn redeem-btn" id="claimBtn" onclick="claimVoucher()">Claim Voucher 🎉</button>
+    </div>
+
+    <button class="nav-btn" onclick="navigateTo('page7.html')">Final Grand Finale 🌟</button>
+  </div>
+
+  <script>
+    function claimVoucher() {
+      const btn = document.getElementById('claimBtn');
+      btn.innerText = "CLAIMED! ✅ (Screenshot sent to heart)";
+      btn.style.backgroundColor = "#ffa502";
+      btn.disabled = true;
+    }
+
+    function navigateTo(url) {
+      document.getElementById('overlay').classList.add('active');
+      setTimeout(() => { window.location.href = url; }, 800);
+    }
+  </script>
+</body>
+</html>
