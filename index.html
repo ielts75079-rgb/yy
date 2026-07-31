@@ -4,26 +4,308 @@
   <meta charset="UTF-8">
   <title>Happy Friendship Day!</title>
   <link rel="stylesheet" href="style.css">
+  <style>
+    :root {
+      --text-main: #2c3e50;
+      --text-accent: #d63031;
+      --loading-text: #636e72;
+      --stem-green: #27ae60;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #fff9e6; 
+      animation: skyColorShift 9s forwards ease-in-out;
+      font-family: 'Georgia', serif;
+      overflow-x: hidden;
+    }
+
+    .hero-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 85vh;
+      padding: 20px;
+      position: relative;
+    }
+
+    .title-heading {
+      font-size: 3rem;
+      color: var(--text-accent);
+      margin-bottom: 20px;
+      letter-spacing: 0.5px;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.08);
+      animation: fadeIn 1.5s ease-in;
+      z-index: 10;
+    }
+
+    /* Sun trajectory: starts bottom-left corner -> rises to top-middle zenith -> sets at bottom-right corner */
+    .sun {
+      position: absolute;
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      z-index: 1;
+      animation: sunArcJourney 9s forwards cubic-bezier(0.37, 0, 0.63, 1);
+    }
+
+    @keyframes sunArcJourney {
+      0% {
+        /* Bottom-left corner sunrise */
+        left: 5%;
+        bottom: 20px;
+        background-color: #ff7675;
+        box-shadow: 0 0 25px #fab1a0, 0 0 50px #ff7675;
+        transform: scale(0.6);
+        opacity: 0.3;
+      }
+      25% {
+        /* Rising up */
+        left: 28%;
+        bottom: 280px;
+        background-color: #ffeaa7;
+        box-shadow: 0 0 40px #ffeaa7, 0 0 80px #fdcb6e;
+        transform: scale(0.85);
+        opacity: 0.8;
+      }
+      50% {
+        /* Upper-middle zenith peak */
+        left: 50%;
+        bottom: 420px;
+        transform: translateX(-50%) scale(1.1);
+        background-color: #fff;
+        box-shadow: 0 0 70px #ffeaa7, 0 0 140px #f1c40f, 0 0 200px rgba(255,255,255,0.9);
+        opacity: 1;
+      }
+      75% {
+        /* Descending toward afternoon */
+        left: 72%;
+        bottom: 280px;
+        background-color: #fab1a0;
+        box-shadow: 0 0 40px #fab1a0, 0 0 80px #e17055;
+        transform: scale(0.85);
+        opacity: 0.8;
+      }
+      100% {
+        /* Bottom-right corner sunset */
+        left: 90%;
+        bottom: 20px;
+        background-color: #e17055;
+        box-shadow: 0 0 25px #d63031;
+        transform: scale(0.6);
+        opacity: 0.3;
+      }
+    }
+
+    /* Sky color changes smoothly matching the natural sun arc path */
+    @keyframes skyColorShift {
+      0% { background-color: #fff5ee; }
+      25% { background-color: #fffde7; }
+      50% { background-color: #e8f4f8; }
+      75% { background-color: #fff3e0; }
+      100% { background-color: #fbebee; }
+    }
+
+    /* Professional 6-Flower Garden with uniform balanced style and subtle scale differences */
+    .flower-garden {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+      gap: 18px;
+      height: 280px;
+      margin: 30px 0;
+      width: 100%;
+      max-width: 900px;
+      z-index: 5;
+    }
+
+    .stem {
+      stroke-dasharray: 250;
+      stroke-dashoffset: 250;
+      animation: growStem 1.2s forwards ease-out;
+      stroke: var(--stem-green);
+    }
+
+    .flower-head {
+      transform: scale(0);
+      transform-origin: center;
+      animation: bloom 0.8s forwards cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    /* Sequential Bloom Timing for H, A, B, I, B, A one-by-one */
+    .flower-h .stem { animation-delay: 0.4s; }
+    .flower-h .flower-head { animation-delay: 1.2s; }
+
+    .flower-a1 .stem { animation-delay: 1.5s; }
+    .flower-a1 .flower-head { animation-delay: 2.3s; }
+
+    .flower-b1 .stem { animation-delay: 2.6s; }
+    .flower-b1 .flower-head { animation-delay: 3.4s; }
+
+    .flower-i .stem { animation-delay: 3.7s; }
+    .flower-i .flower-head { animation-delay: 4.5s; }
+
+    .flower-b2 .stem { animation-delay: 4.8s; }
+    .flower-b2 .flower-head { animation-delay: 5.6s; }
+
+    .flower-a2 .stem { animation-delay: 5.9s; }
+    .flower-a2 .flower-head { animation-delay: 6.7s; }
+
+    /* Elegant Serif Letters inside flowers */
+    .flower-letter {
+      font-family: 'Georgia', serif;
+      font-weight: bold;
+      fill: #fff;
+      pointer-events: none;
+      text-anchor: middle;
+      dominant-baseline: central;
+      transform-origin: center;
+      animation: bloomText 0.8s forwards cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      opacity: 0;
+    }
+
+    .flower-h .flower-letter { animation-delay: 1.2s; }
+    .flower-a1 .flower-letter { animation-delay: 2.3s; }
+    .flower-b1 .flower-letter { animation-delay: 3.4s; }
+    .flower-i .flower-letter { animation-delay: 4.5s; }
+    .flower-b2 .flower-letter { animation-delay: 5.6s; }
+    .flower-a2 .flower-letter { animation-delay: 6.7s; }
+
+    @keyframes bloomText {
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    @keyframes growStem {
+      to { stroke-dashoffset: 0; }
+    }
+
+    @keyframes bloom {
+      to { transform: scale(1); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Loading Text at bottom */
+    .loading-text {
+      margin-top: 30px;
+      font-size: 1.1rem;
+      color: var(--loading-text);
+      letter-spacing: 1.5px;
+      font-weight: 300;
+      animation: fadeIn 1.5s ease-in;
+      z-index: 10;
+    }
+  </style>
 </head>
 <body>
   <div class="transition-overlay" id="overlay"></div>
 
-  <h1>Happy Friendship Day Bestie! 💐</h1>
-  
-  <div class="flower-container">
-    💐🌸🌻🌹🌷
+  <div class="hero-container">
+    <h1 class="title-heading">Happy Friendship Day, Bestie!</h1>
+
+    <!-- Sun moving from bottom-left corner to upper-middle zenith to bottom-right corner -->
+    <div class="sun"></div>
+
+    <!-- 6 Uniform Professional Flowers with Harmonious Gradual Size Variations -->
+    <div class="flower-garden">
+      
+      <!-- 1. Flower H -->
+      <svg class="flower-h" width="75" height="250" viewBox="0 0 100 280" style="transform: translateY(20px) scale(0.9);">
+        <path class="stem" d="M 50,280 Q 30,160 50,85" stroke-width="5" fill="none" stroke-linecap="round" />
+        <g class="flower-head" style="transform-origin: 50px 85px;">
+          <circle cx="50" cy="55" r="16" fill="#f1c40f" />
+          <circle cx="30" cy="85" r="16" fill="#f1c40f" />
+          <circle cx="70" cy="85" r="16" fill="#f1c40f" />
+          <circle cx="50" cy="115" r="16" fill="#f1c40f" />
+          <circle cx="50" cy="85" r="13" fill="#e67e22" />
+        </g>
+        <text x="50" y="89" font-size="14" class="flower-letter">H</text>
+      </svg>
+
+      <!-- 2. Flower A -->
+      <svg class="flower-a1" width="75" height="250" viewBox="0 0 100 280" style="transform: translateY(12px) scale(0.95);">
+        <path class="stem" d="M 50,280 Q 70,160 50,85" stroke-width="5" fill="none" stroke-linecap="round" />
+        <g class="flower-head" style="transform-origin: 50px 85px;">
+          <circle cx="50" cy="55" r="16" fill="#e67e22" />
+          <circle cx="30" cy="85" r="16" fill="#e67e22" />
+          <circle cx="70" cy="85" r="16" fill="#e67e22" />
+          <circle cx="50" cy="115" r="16" fill="#e67e22" />
+          <circle cx="50" cy="85" r="13" fill="#d35400" />
+        </g>
+        <text x="50" y="89" font-size="14" class="flower-letter">A</text>
+      </svg>
+
+      <!-- 3. Flower B -->
+      <svg class="flower-b1" width="75" height="250" viewBox="0 0 100 280" style="transform: translateY(5px) scale(1.0);">
+        <path class="stem" d="M 50,280 Q 40,150 50,80" stroke-width="5" fill="none" stroke-linecap="round" />
+        <g class="flower-head" style="transform-origin: 50px 80px;">
+          <circle cx="50" cy="50" r="16" fill="#9b59b6" />
+          <circle cx="30" cy="80" r="16" fill="#9b59b6" />
+          <circle cx="70" cy="80" r="16" fill="#9b59b6" />
+          <circle cx="50" cy="110" r="16" fill="#9b59b6" />
+          <circle cx="50" cy="80" r="13" fill="#8e44ad" />
+        </g>
+        <text x="50" y="84" font-size="14" class="flower-letter">B</text>
+      </svg>
+
+      <!-- 4. Flower I -->
+      <svg class="flower-i" width="75" height="250" viewBox="0 0 100 280" style="transform: translateY(0px) scale(1.05);">
+        <path class="stem" d="M 50,280 Q 60,140 50,75" stroke-width="5" fill="none" stroke-linecap="round" />
+        <g class="flower-head" style="transform-origin: 50px 75px;">
+          <circle cx="50" cy="45" r="16" fill="#f1c40f" />
+          <circle cx="30" cy="75" r="16" fill="#f1c40f" />
+          <circle cx="70" cy="75" r="16" fill="#f1c40f" />
+          <circle cx="50" cy="105" r="16" fill="#f1c40f" />
+          <circle cx="50" cy="75" r="13" fill="#f39c12" />
+        </g>
+        <text x="50" y="79" font-size="14" class="flower-letter">I</text>
+      </svg>
+
+      <!-- 5. Flower B -->
+      <svg class="flower-b2" width="75" height="250" viewBox="0 0 100 280" style="transform: translateY(12px) scale(0.95);">
+        <path class="stem" d="M 50,280 Q 40,160 50,85" stroke-width="5" fill="none" stroke-linecap="round" />
+        <g class="flower-head" style="transform-origin: 50px 85px;">
+          <circle cx="50" cy="55" r="16" fill="#e67e22" />
+          <circle cx="30" cy="85" r="16" fill="#e67e22" />
+          <circle cx="70" cy="85" r="16" fill="#e67e22" />
+          <circle cx="50" cy="115" r="16" fill="#e67e22" />
+          <circle cx="50" cy="85" r="13" fill="#d35400" />
+        </g>
+        <text x="50" y="89" font-size="14" class="flower-letter">B</text>
+      </svg>
+
+      <!-- 6. Flower A -->
+      <svg class="flower-a2" width="75" height="250" viewBox="0 0 100 280" style="transform: translateY(20px) scale(0.9);">
+        <path class="stem" d="M 50,280 Q 60,160 50,85" stroke-width="5" fill="none" stroke-linecap="round" />
+        <g class="flower-head" style="transform-origin: 50px 85px;">
+          <circle cx="50" cy="55" r="16" fill="#f1c40f" />
+          <circle cx="30" cy="85" r="16" fill="#f1c40f" />
+          <circle cx="70" cy="85" r="16" fill="#f1c40f" />
+          <circle cx="50" cy="115" r="16" fill="#f1c40f" />
+          <circle cx="50" cy="85" r="13" fill="#e67e22" />
+        </g>
+        <text x="50" y="89" font-size="14" class="flower-letter">A</text>
+      </svg>
+
+    </div>
+
+    <!-- Loading text at the bottom -->
+    <p class="loading-text">Preparing something special for you...</p>
   </div>
 
-  <p>Preparing something special for you...</p>
-
   <script>
-    // Automatically transition to Page 2 after 4 seconds
     setTimeout(() => {
       document.getElementById('overlay').classList.add('active');
       setTimeout(() => {
         window.location.href = 'page2.html';
       }, 800);
-    }, 4000);
+    }, 8500);
   </script>
 </body>
 </html>
