@@ -2,15 +2,28 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <!-- Crucial for mobile responsiveness -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>A Letter For You</title>
   <link rel="stylesheet" href="style.css">
   <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      text-align: center;
+      background-color: #fdfbf7;
+      color: #333;
+      margin: 0;
+      padding: 15px;
+      box-sizing: border-box;
+      overflow-x: hidden; /* Prevents horizontal shaking */
+    }
+
     .envelope-wrapper {
       position: relative;
-      width: 320px;
-      height: 200px;
+      width: 280px; /* Scaled down slightly for mobile screens */
+      height: 180px;
       background-color: #f0e6d2;
-      margin: 120px auto 40px auto;
+      margin: 40px auto 20px auto;
       border-radius: 0 0 10px 10px;
       box-shadow: 0 10px 25px rgba(0,0,0,0.15);
     }
@@ -22,9 +35,9 @@
       left: 0;
       width: 0;
       height: 0;
-      border-left: 160px solid transparent;
-      border-right: 160px solid transparent;
-      border-top: 110px solid #e2d4b7;
+      border-left: 140px solid transparent;
+      border-right: 140px solid transparent;
+      border-top: 100px solid #e2d4b7;
       transform-origin: top;
       transition: transform 0.8s ease-in-out;
       z-index: 4;
@@ -36,8 +49,8 @@
       top: -15px;
       left: 50%;
       transform: translateX(-50%);
-      width: 55px;
-      height: 55px;
+      width: 45px;
+      height: 45px;
       background-color: #ff4757;
       border: 3px dashed #ffffff;
       border-radius: 50%;
@@ -46,7 +59,7 @@
       align-items: center;
       justify-content: center;
       color: white;
-      font-size: 1.2rem;
+      font-size: 1rem;
       font-weight: bold;
       z-index: 5;
       transition: opacity 0.5s ease, transform 0.5s ease;
@@ -59,9 +72,9 @@
       left: 0;
       width: 0;
       height: 0;
-      border-left: 160px solid #ebd9b5;
-      border-right: 160px solid #ebd9b5;
-      border-bottom: 100px solid #dfcb9e;
+      border-left: 140px solid #ebd9b5;
+      border-right: 140px solid #ebd9b5;
+      border-bottom: 90px solid #dfcb9e;
       border-radius: 0 0 10px 10px;
       z-index: 3;
     }
@@ -70,10 +83,10 @@
     .message-paper {
       position: absolute;
       bottom: 10px;
-      left: 20px;
-      width: 280px;
+      left: 15px;
+      width: 250px;
       background: #ffffff;
-      padding: 20px;
+      padding: 15px;
       border-radius: 6px;
       box-shadow: 0 4px 10px rgba(0,0,0,0.1);
       text-align: left;
@@ -86,13 +99,15 @@
 
     .message-paper h3 {
       color: #ff4757;
-      margin-bottom: 8px;
+      margin: 0 0 5px 0;
+      font-size: 1.1rem;
     }
 
     .message-paper p {
-      font-size: 0.95rem;
-      line-height: 1.5;
+      font-size: 0.85rem;
+      line-height: 1.4;
       color: #2d3436;
+      margin: 0;
     }
 
     /* Animation States triggered after 5 seconds */
@@ -109,8 +124,43 @@
     .envelope-wrapper.open .message-paper {
       opacity: 1;
       visibility: visible;
-      transform: translateY(-160px);
+      transform: translateY(-145px);
       z-index: 4;
+    }
+
+    /* Quiz Section Layout */
+    .quiz-section {
+      margin-top: 30px;
+      padding: 0 10px;
+    }
+
+    .quiz-section h3 {
+      font-size: 1.2rem;
+      color: #333;
+    }
+
+    .btn-group {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-top: 15px;
+    }
+
+    .quiz-btn {
+      padding: 10px 25px;
+      font-size: 1rem;
+      border: none;
+      border-radius: 20px;
+      background-color: #ff6b81;
+      color: white;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(255, 107, 129, 0.3);
+      transition: transform 0.2s ease;
+    }
+
+    #noBtn {
+      background-color: #55efc4;
+      color: #2d3436;
     }
 
     /* Fullscreen NO Button Style */
@@ -123,12 +173,21 @@
       margin: 0 !important;
       border-radius: 0 !important;
       z-index: 99999 !important;
-      font-size: 3rem !important;
+      font-size: 2rem !important;
       font-weight: bold !important;
       background-color: #55efc4 !important;
       color: #2d3436 !important;
       box-shadow: none !important;
       transform: none !important;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #finalMessage {
+      font-size: 1.1rem;
+      padding: 0 15px;
+      line-height: 1.5;
     }
   </style>
 </head>
@@ -153,13 +212,13 @@
   </div>
 
   <!-- Funny Quiz Section -->
-  <div class="quiz-section" style="margin-top: 140px; margin-bottom: 50px;">
+  <div class="quiz-section">
     <h3 id="quizTitle">Do you hate me? 👀</h3>
     <div class="btn-group">
       <button class="quiz-btn" id="yesBtn">Yes</button>
       <button class="quiz-btn" id="noBtn">No</button>
     </div>
-    <h2 id="finalMessage" style="margin-top:30px; color:#ff4757; display:none; font-size: 1.8rem;"></h2>
+    <h2 id="finalMessage" style="margin-top:20px; color:#ff4757; display:none;"></h2>
   </div>
 
   <script>
@@ -180,11 +239,12 @@
 
     yesBtn.addEventListener('mouseover', moveYesButton);
     yesBtn.addEventListener('click', moveYesButton);
+    yesBtn.addEventListener('touchstart', (e) => { e.preventDefault(); moveYesButton(); });
 
     function moveYesButton() {
-      if (moveCount < 6) { // Dodges 6 times
-        const x = Math.random() * (window.innerWidth - 100) - (window.innerWidth / 2 - 50);
-        const y = Math.random() * 100 - 50;
+      if (moveCount < 6) { // Dodges 6 times safely within mobile view boundaries
+        const x = (Math.random() - 0.5) * 160;
+        const y = (Math.random() - 0.5) * 80;
         yesBtn.style.transform = `translate(${x}px, ${y}px)`;
         moveCount++;
       } else {
@@ -198,7 +258,7 @@
     noBtn.addEventListener('click', () => {
       yesBtn.style.display = 'none';
       noBtn.style.display = 'none';
-      noBtn.classList.remove('fullscreen-no'); // Removes screen overlay so letter remains visible
+      noBtn.classList.remove('fullscreen-no');
       quizTitle.style.display = 'none';
       
       // Keeps the envelope visible and displays the final prank text right underneath it
