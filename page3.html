@@ -1,102 +1,72 @@
-/* General Mobile-First Styles */
-body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  text-align: center;
-  background-color: #fdfbf7;
-  color: #333;
-  margin: 0;
-  padding: 20px;
-  box-sizing: border-box;
-}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <!-- Crucial for mobile responsiveness -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sweet Surprises</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="transition-overlay" id="overlay"></div>
 
-h2 {
-  font-size: 1.4rem;
-  margin-bottom: 20px;
-  padding: 0 10px;
-}
+  <h2>Scratch the boxes to reveal messages! 🎁</h2>
 
-/* Responsive Scratch Grid Layout */
-.scratch-grid {
-  display: grid;
-  grid-template-columns: 1fr; /* Single column on small mobile screens */
-  gap: 15px;
-  width: 100%;
-  max-width: 400px;
-  margin: 0 auto;
-}
+  <div class="scratch-grid">
+    <div class="scratch-card"><span>You make me laugh!</span><canvas></canvas></div>
+    <div class="scratch-card"><span>My partner in crime.</span><canvas></canvas></div>
+    <div class="scratch-card"><span>Best secret keeper!</span><canvas></canvas></div>
+    <div class="scratch-card"><span>Always there for me.</span><canvas></canvas></div>
+    <div class="scratch-card"><span>Truly irreplaceable.</span><canvas></canvas></div>
+    <div class="scratch-card"><span>Love you to bits!</span><canvas></canvas></div>
+  </div>
 
-/* Individual Scratch Card */
-.scratch-card {
-  position: relative;
-  background: #ffffff;
-  height: 80px;
-  border-radius: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 600;
-  font-size: 1rem;
-  color: #ff6b81;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
-  overflow: hidden;
-  border: 2px dashed #ffcad4;
-}
+  <button class="nav-btn" onclick="navigateTo('page4.html')">Final Surprise 💌</button>
 
-.scratch-card span {
-  padding: 0 15px;
-  z-index: 1;
-}
+  <script>
+    // Scratch Card Canvas Script
+    document.querySelectorAll('.scratch-card').forEach(card => {
+      const canvas = card.querySelector('canvas');
+      const ctx = canvas.getContext('2d');
+      
+      // Ensure canvas matches element size dynamically
+      canvas.width = card.offsetWidth;
+      canvas.height = card.offsetHeight;
 
-.scratch-card canvas {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  cursor: pointer;
-  z-index: 2;
-}
+      // Cover with gray scratch layer
+      ctx.fillStyle = '#b2bec3';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-/* Responsive Button */
-.nav-btn {
-  margin-top: 30px;
-  padding: 12px 24px;
-  font-size: 1rem;
-  background-color: #ff6b81;
-  color: white;
-  border: none;
-  border-radius: 25px;
-  cursor: pointer;
-  box-shadow: 0 4px 10px rgba(255, 107, 129, 0.3);
-}
+      let isDrawing = false;
+      const scratch = (e) => {
+        if (!isDrawing) return;
+        const rect = canvas.getBoundingClientRect();
+        const clientX = e.clientX || (e.touches && e.touches[0].clientX);
+        const clientY = e.clientY || (e.touches && e.touches[0].clientY);
+        if (clientX === undefined || clientY === undefined) return;
 
-/* Transition Overlay */
-.transition-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: #000;
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.8s ease;
-  z-index: 999;
-}
+        const x = clientX - rect.left;
+        const y = clientY - rect.top;
 
-.transition-overlay.active {
-  opacity: 1;
-  visibility: visible;
-}
+        ctx.globalCompositeOperation = 'destination-out';
+        ctx.beginPath();
+        ctx.arc(x, y, 18, 0, Math.PI * 2);
+        ctx.fill();
+      };
 
-/* Media Query for Larger Screens (Tablets & Desktops) */
-@media (min-width: 600px) {
-  .scratch-grid {
-    grid-template-columns: repeat(2, 1fr); /* 2 columns on tablets/desktops */
-    max-width: 600px;
-  }
-  
-  h2 {
-    font-size: 1.8rem;
-  }
-}
+      canvas.addEventListener('mousedown', () => isDrawing = true);
+      window.addEventListener('mouseup', () => isDrawing = false);
+      canvas.addEventListener('mousemove', scratch);
+      
+      canvas.addEventListener('touchstart', (e) => { isDrawing = true; scratch(e); });
+      window.addEventListener('touchend', () => isDrawing = false);
+      canvas.addEventListener('touchmove', (e) => { e.preventDefault(); scratch(e); }, { passive: false });
+    });
+
+    function navigateTo(url) {
+      document.getElementById('overlay').classList.add('active');
+      setTimeout(() => { window.location.href = url; }, 800);
+    }
+  </script>
+</body>
+</html>
